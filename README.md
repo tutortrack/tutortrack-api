@@ -1,4 +1,14 @@
-tutortrack-api
-==============
+TutorTrackAPI
+=============================================
 
-The TutorTrack API hosted by Google App Engine
+The TutorTrack API Proxy Code that handles HTTP requests from both the website and from the mobile app.
+
+## Products
+- [App Engine]
+
+## Language
+- [Java]
+
+## APIs
+- [Google Cloud Endpoints]
+- [Google Datastore]
