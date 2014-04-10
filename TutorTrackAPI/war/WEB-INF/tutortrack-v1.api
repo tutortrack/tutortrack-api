@@ -1,0 +1,503 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://tutor-track-api.appspot.com/_ah/api",
+  "name" : "tutortrack",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://tutor-track-api.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "methods" : {
+    "tutortrack.tutorTrackAPI.addTutorBlock" : {
+      "path" : "addTutorBlock",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.addTutorBlock",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.tutors.getinfo" : {
+      "path" : "tutors/myInfo",
+      "httpMethod" : "get",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.getTutorInfo",
+      "request" : {
+        "parameters" : {
+          "email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.appointments.make_appointment" : {
+      "path" : "appointments/makeAppointmentWithTutor",
+      "httpMethod" : "post",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.makeAppointmentWithTutor",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.tutors.create" : {
+      "path" : "tutors/register",
+      "httpMethod" : "post",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.registerTutor",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.admins.create" : {
+      "path" : "admins/register",
+      "httpMethod" : "post",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.registerAdmin",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.students.getinfo" : {
+      "path" : "students/myInfo",
+      "httpMethod" : "get",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.getStudentInfo",
+      "request" : {
+        "parameters" : {
+          "email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.students.create" : {
+      "path" : "students/register",
+      "httpMethod" : "post",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.registerStudent",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.tutors.search" : {
+      "path" : "tutors/search",
+      "httpMethod" : "get",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.searchTutors",
+      "request" : {
+        "parameters" : {
+          "location" : {
+            "type" : "string",
+            "required" : false,
+            "default" : ""
+          },
+          "subject" : {
+            "type" : "string",
+            "required" : false,
+            "default" : ""
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.admins.getinfo" : {
+      "path" : "admins/myInfo",
+      "httpMethod" : "get",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.getAdminInfo",
+      "request" : {
+        "parameters" : {
+          "email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.appointments.getappointments.tutor" : {
+      "path" : "appointments/getTutorAppointments",
+      "httpMethod" : "get",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.getTutorAppointments",
+      "request" : {
+        "parameters" : {
+          "tutor_email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "tutor_password" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.appointments.getappointments.student" : {
+      "path" : "appointments/getStudentAppointments",
+      "httpMethod" : "get",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.getStudentAppointments",
+      "request" : {
+        "parameters" : {
+          "email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "password" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.tutors.searchbyname" : {
+      "path" : "tutors/searchByName",
+      "httpMethod" : "get",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.getTutor",
+      "request" : {
+        "parameters" : {
+          "tutor_name" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "TutorBlockPostObject" : {
+        "id" : "TutorBlockPostObject",
+        "type" : "object",
+        "properties" : {
+          "tutor" : {
+            "$ref" : "Tutor"
+          },
+          "startDate" : {
+            "type" : "string"
+          },
+          "endDate" : {
+            "type" : "string"
+          },
+          "startTime" : {
+            "type" : "string"
+          },
+          "endTime" : {
+            "type" : "string"
+          },
+          "location" : {
+            "type" : "string"
+          },
+          "subjects" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Tutor" : {
+        "id" : "Tutor",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "umsid" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AddTutorBlockResponse" : {
+        "id" : "AddTutorBlockResponse",
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "StudentAppointmentPostObject" : {
+        "id" : "StudentAppointmentPostObject",
+        "type" : "object",
+        "properties" : {
+          "studentEmail" : {
+            "type" : "string"
+          },
+          "studentPassword" : {
+            "type" : "string"
+          },
+          "date" : {
+            "type" : "string"
+          },
+          "time" : {
+            "type" : "string"
+          },
+          "location" : {
+            "type" : "string"
+          },
+          "subjects" : {
+            "type" : "string"
+          },
+          "tutor" : {
+            "$ref" : "Tutor"
+          }
+        }
+      },
+      "Admin" : {
+        "id" : "Admin",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "umsid" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Student" : {
+        "id" : "Student",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "umsid" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TutorBlockPostObjectCollection" : {
+        "id" : "TutorBlockPostObjectCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "TutorBlockPostObject"
+            }
+          }
+        }
+      },
+      "StudentAppointmentPostObjectCollection" : {
+        "id" : "StudentAppointmentPostObjectCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "StudentAppointmentPostObject"
+            }
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.tutortrack.api.TutorTrackAPI.addTutorBlock" : {
+        "request" : {
+          "$ref" : "TutorBlockPostObject"
+        },
+        "response" : {
+          "$ref" : "AddTutorBlockResponse"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.getTutorInfo" : {
+        "response" : {
+          "$ref" : "Tutor"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.makeAppointmentWithTutor" : {
+        "request" : {
+          "$ref" : "StudentAppointmentPostObject"
+        },
+        "response" : {
+          "$ref" : "AddTutorBlockResponse"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.registerTutor" : {
+        "request" : {
+          "$ref" : "Tutor"
+        },
+        "response" : {
+          "$ref" : "Tutor"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.registerAdmin" : {
+        "request" : {
+          "$ref" : "Admin"
+        },
+        "response" : {
+          "$ref" : "Admin"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.getStudentInfo" : {
+        "response" : {
+          "$ref" : "Student"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.registerStudent" : {
+        "request" : {
+          "$ref" : "Student"
+        },
+        "response" : {
+          "$ref" : "Student"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.searchTutors" : {
+        "response" : {
+          "$ref" : "TutorBlockPostObjectCollection"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.getAdminInfo" : {
+        "response" : {
+          "$ref" : "Admin"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.getTutorAppointments" : {
+        "response" : {
+          "$ref" : "StudentAppointmentPostObjectCollection"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.getStudentAppointments" : {
+        "response" : {
+          "$ref" : "StudentAppointmentPostObjectCollection"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.getTutor" : {
+        "response" : {
+          "$ref" : "Tutor"
+        }
+      }
+    }
+  }
+}
