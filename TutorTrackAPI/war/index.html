@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TutorTrack API v1 Documentation</title>
+<style type="text/css">
+body,td,th {
+	font-family: "Times New Roman", Times, serif;
+}
+body table {
+	font-family: "Times New Roman", Times, serif;
+}
+.header {
+	background-image: -webkit-gradient(
+	linear,
+	right bottom,
+	right top,
+	color-stop(0.32, #0265B6),
+	color-stop(1, #06ACD6)
+);
+background-image: -o-linear-gradient(top, #0265B6 32%, #06ACD6 100%);
+background-image: -moz-linear-gradient(top, #0265B6 32%, #06ACD6 100%);
+background-image: -webkit-linear-gradient(top, #0265B6 32%, #06ACD6 100%);
+background-image: -ms-linear-gradient(top, #0265B6 32%, #06ACD6 100%);
+background-image: linear-gradient(to top, #0265B6 32%, #06ACD6 100%);
+width: auto;
+}
+.logo {
+	width: 230px;
+	height: 60px;
+	background-color: transparent;
+	background-image: url(images/logo.png);
+	background-repeat: no-repeat;
+   }
+#GET {
+	color: #FFF;
+	background-color: #00F;
+}
+#POST {
+	color: #FFF;
+	background-color: #060;
+}
+</style>
+</head>
+
+<body>
+
+  <div class="header"><div class="logo">
+  </div></div>
+<center>
+ <h1>API Documentation</h1>
+  <p>Base URL: https://1-dot-tutor-track-api.appspot.com/_ah/api</p>
+ <p>Methods:</p>
+</center>
+<table width="100%" border="1">
+  <tr>
+    <th scope="col"><strong>Method Name</strong></th>
+    <th scope="col"><strong>Parameters/Required Request Info</strong></th>
+    <th scope="col"><strong>Return Info</strong></th>
+    <th scope="col"><strong>Request Type</strong></th>
+  </tr>
+  <tr>
+    <th scope="row"><pre>getStudentInfo</pre></th>
+    <td><pre>email (required)
+password(required)</pre></td>
+   <td><pre>{</pre>
+      <blockquote>
+       <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+       </blockquote>
+      <p>}    </p>
+      <pre>&nbsp;</pre></td>
+    <td id="GET">GET</td>
+  </tr>
+  <tr>
+    <th scope="row"><pre>registerStudent</pre></th>
+    <td><pre>{</pre>
+     <blockquote>
+      <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+     </blockquote>
+    <p>} </p></td>
+    <td><pre>{</pre>
+     <blockquote>
+      <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+     </blockquote>
+    <p>} </p></td>
+    <td id="POST">POST</td>
+  </tr>
+  <tr>
+   <th scope="row"><pre>getTutorInfo</pre></th>
+   <td><pre>email (required)
+password(required)</pre></td>
+   <td><pre>{</pre>
+    <blockquote>
+     <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+    </blockquote>
+    <p>} </p>
+    <pre>&nbsp;</pre></td>
+   <td id="GET">GET</td>
+  </tr>
+  <tr>
+   <th scope="row"><pre>registerTutor</pre></th>
+   <td><pre>{</pre>
+    <blockquote>
+     <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+    </blockquote>
+    <p>} </p></td>
+   <td><pre>{</pre>
+    <blockquote>
+     <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+    </blockquote>
+    <p>} </p></td>
+   <td id="POST">POST</td>
+  </tr>
+  <tr>
+   <th scope="row"><pre>getAdminInfo</pre></th>
+   <td><pre>email (required)
+password(required)</pre></td>
+   <td><pre>{</pre>
+    <blockquote>
+     <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+    </blockquote>
+    <p>} </p>
+    <pre>&nbsp;</pre></td>
+   <td id="GET">GET</td>
+  </tr>
+  <tr>
+   <th scope="row"><pre>registerAdmin</pre></th>
+   <td><pre>{</pre>
+    <blockquote>
+     <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+    </blockquote>
+    <p>} </p></td>
+   <td><pre>{</pre>
+    <blockquote>
+     <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+    </blockquote>
+    <p>} </p></td>
+   <td id="POST">POST</td>
+  </tr>
+  <tr>
+    <th scope="row"><pre>getTutor</pre></th>
+    <td><pre>tutor_name (required)</pre></td>
+    <td><pre>{</pre>
+     <blockquote>
+      <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+     </blockquote>
+    <p>} </p></td>
+    <td id="GET">GET</td>
+  </tr>
+  <tr>
+    <th scope="row"><pre>searchTutors</pre></th>
+    <td><pre>location (optional)
+subject (optional)</pre></td>
+    <td><p>
+     {</p>
+     <blockquote>
+      <pre>{</pre>
+      <blockquote>
+       <pre>&quot;tutor&quot;:
+{</pre>
+       <blockquote>
+        <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+       </blockquote>
+      <pre>}
+&quot;startDate&quot;: startDate
+&quot;endDate&quot;: endDate
+&quot;startTime&quot;: startTime
+&quot;endTime&quot;: endTime
+&quot;location&quot;: location
+&quot;subjects&quot;: subjects 
+</pre></blockquote>
+      <pre>} 
+...</pre>
+     </blockquote>
+     <p><br>
+      }
+      </p>
+     <blockquote>
+      <pre>
+
+      </pre>
+    </blockquote></td>
+    <td id="GET">GET</td>
+  </tr>
+  <tr>
+    <th scope="row"><pre>addTutorBlock</pre></th>
+    <td><pre>{</pre>
+     <blockquote>
+      <pre>&quot;tutor&quot;:
+{</pre>
+      <blockquote>
+       <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+      </blockquote>
+      <pre>}
+&quot;startDate&quot;: startDate
+&quot;endDate&quot;: endDate
+&quot;startTime&quot;: startTime
+&quot;endTime&quot;: endTime
+&quot;location&quot;: location
+&quot;subjects&quot;: subjects 
+     </pre>
+     </blockquote>
+    <pre>} </pre></td>
+    <td>
+    <pre>{     </pre>
+    <blockquote>
+     <pre>
+&quot;message&quot;: message
+</pre>
+    </blockquote>
+   <pre>}</pre></td>
+    <td id="POST">POST</td>
+  </tr>
+  <tr>
+   <th scope="row"><pre>makeAppointmentWithTutor</pre></th>
+   <td><pre>{</pre>
+    <blockquote>
+     <pre>&quot;studentEmail&quot;: studentEmail
+&quot;studentPassword&quot;: studentPassword
+&quot;date&quot;: date
+&quot;time&quot;: time
+&quot;location&quot;: location
+&quot;subjects&quot;: subjects
+&quot;tutor&quot;:
+{</pre>
+     <blockquote>
+      <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+     </blockquote>
+     <pre>}
+</pre>
+    </blockquote>
+   <pre>}    </pre></td>
+   <td><pre>{     </pre>
+    <blockquote>
+     <pre>
+&quot;message&quot;: message
+    </pre>
+    </blockquote>
+   <pre>}</pre></td>
+   <td id="POST">POST</td>
+  </tr>
+  <tr>
+    <th scope="row"><pre>getStudentAppointments</pre></th>
+    <td><pre>email (required)
+password (required)</pre></td>
+    <td><pre>{  </pre>
+     <blockquote>
+      <pre>{</pre>
+      <blockquote>
+       <pre>&quot;studentEmail&quot;: studentEmail
+&quot;studentPassword&quot;: studentPassword
+&quot;date&quot;: date
+&quot;time&quot;: time
+&quot;location&quot;: location
+&quot;subjects&quot;: subjects
+&quot;tutor&quot;:
+{</pre>
+       <blockquote>
+        <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+       </blockquote>
+       <pre>}
+      </pre>
+      </blockquote>
+      <pre>}
+...</pre></blockquote>
+     <pre>}
+      </pre>
+     <blockquote>
+      <blockquote>&nbsp;
+      </blockquote>
+     </blockquote></td>
+    <td id="GET">GET</td>
+  </tr>
+  <tr>
+    <th scope="row"><pre>getTutorAppointments</pre></th>
+    <td><pre>tutor_email (required)
+tutor_password (required)</pre></td>
+    <td><pre>{  </pre>
+     <blockquote>
+      <pre>{</pre>
+      <blockquote>
+       <pre>&quot;studentEmail&quot;: studentEmail
+&quot;studentPassword&quot;: studentPassword
+&quot;date&quot;: date
+&quot;time&quot;: time
+&quot;location&quot;: location
+&quot;subjects&quot;: subjects
+&quot;tutor&quot;:
+{</pre>
+       <blockquote>
+        <pre>&quot;name&quot;: name
+&quot;email&quot;: email
+&quot;password&quot;: password
+&quot;umsid&quot;: umsid</pre>
+       </blockquote>
+       <pre>}
+      </pre>
+      </blockquote>
+      <pre>}
+...</pre>
+     </blockquote>
+    <pre>}</pre></td>
+    <td id="GET">GET</td>
+  </tr>
+</table>
+<p>makeRequest method header</p>
+<p>This method should return a String dump of a JSON array.</p>
+<p>public String makeRequest (String baseUrl, String path, String parameters, String requestType, JSONObject postData)</p>
+
+</body>
+</html>

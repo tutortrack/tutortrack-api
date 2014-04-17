@@ -1,6 +1,8 @@
 package com.tutortrack.api;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +16,10 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+
 
 @Api(name = "tutortrack", version = "v1", scopes = { Constants.EMAIL_SCOPE })
 public class TutorTrackAPI {
@@ -161,6 +167,10 @@ public class TutorTrackAPI {
 	@ApiMethod(name = "appointments.make_appointment", httpMethod = "post", path = "appointments/makeAppointmentWithTutor")
 	public AddTutorBlockResponse makeAppointmentWithTutor(
 			StudentAppointmentPostObject apptPost) {
+		
+		SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yy");
+		SimpleDateFormat timeformat = new SimpleDateFormat("h a");
+		
 		String email = apptPost.getStudentEmail();
 		String pass = apptPost.getStudentPassword();
 
@@ -179,6 +189,16 @@ public class TutorTrackAPI {
 		try {
 
 			datastore.put(en);
+			Calendar when = Calendar.getInstance();
+			Calendar date = Calendar.getInstance();
+			Calendar time = Calendar.getInstance();
+			date.setTime(dateformat.parse(apptPost.getDate()));
+			time.setTime(timeformat.parse(apptPost.getTime()));
+			when.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE), time.get(Calendar.HOUR_OF_DAY), 0, 0);
+			when.add(Calendar.HOUR_OF_DAY, -2);
+			
+			Queue q = QueueFactory.getDefaultQueue();
+			q.add(TaskOptions.Builder.withUrl("/send_reminder").etaMillis(when.getTimeInMillis()).param("email", email).param("name", getStudentInfo(email,pass).getName()));
 
 		} catch (Exception e) {
 
