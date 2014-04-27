@@ -11,14 +11,6 @@
         <servlet-name>SystemServiceServlet</servlet-name>
         <url-pattern>/_ah/spi/*</url-pattern>
     </servlet-mapping>
-    <servlet>
-            <servlet-name>ReminderEmailServlet</servlet-name>
-            <servlet-class>com.tutortrack.api.servlet.ReminderEmailServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-            <servlet-name>ReminderEmailServlet</servlet-name>
-            <url-pattern>/send_reminder</url-pattern>
-    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

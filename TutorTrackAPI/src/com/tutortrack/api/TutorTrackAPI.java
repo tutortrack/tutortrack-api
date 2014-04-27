@@ -14,12 +14,13 @@ import com.google.api.server.spi.config.DefaultValue;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
-
+import com.google.appengine.api.datastore.Key;
 
 @Api(name = "tutortrack", version = "v1", scopes = { Constants.EMAIL_SCOPE })
 public class TutorTrackAPI {
@@ -90,21 +91,22 @@ public class TutorTrackAPI {
 		Query q = new Query("TutorBlock");
 
 		if (!location.equals("")) {
-			q.addFilter("location", Query.FilterOperator.EQUAL, location);
+			q.addFilter("location", Query.FilterOperator.EQUAL, location.toUpperCase());
 		}
 
 		if (!subject.equals("")) {
 			q.addFilter("subject", Query.FilterOperator.EQUAL, subject);
 		}
 
-		q.addSort("tutor_email", SortDirection.ASCENDING);
+		//q.addSort("tutor_email", SortDirection.ASCENDING);
 
 		for (Entity e : datastore.prepare(q).asIterable()) {
 
 			List<String> subjects = (List<String>) e.getProperty("subject");
 
 			TutorBlockPostObject block = new TutorBlockPostObject();
-			block.setTutor(getTutorInfo((String) e.getProperty("tutor_email"), (String) e.getProperty("tutor_password")));
+			block.setTutor(getTutorInfo((String) e.getProperty("tutor_email"),
+					(String) e.getProperty("tutor_password")));
 			block.setStartDate((String) e.getProperty("startDate"));
 			block.setEndDate((String) e.getProperty("endDate"));
 			block.setStartTime((String) e.getProperty("startTime"));
@@ -137,7 +139,10 @@ public class TutorTrackAPI {
 		en.setProperty("endDate", tutor.getEndDate());
 		en.setProperty("startTime", tutor.getStartTime());
 		en.setProperty("endTime", tutor.getEndTime());
-		en.setProperty("location", tutor.getLocation());
+		
+		en.setProperty("location", tutor.location.toUpperCase());
+		
+		
 		String[] parts = tutor.getSubjects().split(", ");
 
 		en.setProperty("subject", Arrays.asList(parts));
@@ -157,9 +162,10 @@ public class TutorTrackAPI {
 		return res;
 
 	}
-	
+
 	/**
 	 * Make appointment with tutor. Must be logged in.
+	 * 
 	 * @param apptPost
 	 * @return
 	 */
@@ -167,10 +173,10 @@ public class TutorTrackAPI {
 	@ApiMethod(name = "appointments.make_appointment", httpMethod = "post", path = "appointments/makeAppointmentWithTutor")
 	public AddTutorBlockResponse makeAppointmentWithTutor(
 			StudentAppointmentPostObject apptPost) {
-		
+
 		SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yy");
 		SimpleDateFormat timeformat = new SimpleDateFormat("h a");
-		
+
 		String email = apptPost.getStudentEmail();
 		String pass = apptPost.getStudentPassword();
 
@@ -194,11 +200,15 @@ public class TutorTrackAPI {
 			Calendar time = Calendar.getInstance();
 			date.setTime(dateformat.parse(apptPost.getDate()));
 			time.setTime(timeformat.parse(apptPost.getTime()));
-			when.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE), time.get(Calendar.HOUR_OF_DAY), 0, 0);
+			when.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH),
+					date.get(Calendar.DATE), time.get(Calendar.HOUR_OF_DAY), 0,
+					0);
 			when.add(Calendar.HOUR_OF_DAY, -2);
-			
+
 			Queue q = QueueFactory.getDefaultQueue();
-			q.add(TaskOptions.Builder.withUrl("/send_reminder").etaMillis(when.getTimeInMillis()).param("email", email).param("name", getStudentInfo(email,pass).getName()));
+			q.add(TaskOptions.Builder.withUrl("/send_reminder")
+					.etaMillis(when.getTimeInMillis()).param("email", email)
+					.param("name", getStudentInfo(email, pass).getName()));
 
 		} catch (Exception e) {
 
@@ -213,25 +223,27 @@ public class TutorTrackAPI {
 		return res;
 	}
 
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	@ApiMethod(name = "appointments.getappointments.student", httpMethod = "get", path = "appointments/getStudentAppointments")
 	public List<StudentAppointmentPostObject> getStudentAppointments(
 			@Named("email") String email, @Named("password") String password) {
 
 		List<StudentAppointmentPostObject> res = new LinkedList<StudentAppointmentPostObject>();
 
-		Query q = new Query("StudentAppointment").addFilter("email",
-				Query.FilterOperator.EQUAL, email).addFilter("password",
-				Query.FilterOperator.EQUAL, password);
+		Query q = new Query("StudentAppointment")
+				.setFilter(new Query.FilterPredicate("email",
+						Query.FilterOperator.EQUAL, email));
 
-		q.addSort("tutor_email", SortDirection.ASCENDING);
+		// q.addSort("tutor_email", SortDirection.ASCENDING);
 
 		for (Entity e : datastore.prepare(q).asIterable()) {
 
 			List<String> subjects = (List<String>) e.getProperty("subject");
 
 			StudentAppointmentPostObject block = new StudentAppointmentPostObject();
-			block.setTutor(this.getTutorInfo((String) e.getProperty("tutor_email"), (String) e.getProperty("tutor_password"))); 
+			block.setTutor(this.getTutorInfo(
+					(String) e.getProperty("tutor_email"),
+					(String) e.getProperty("tutor_password")));
 			block.setLocation((String) e.getProperty("location"));
 			block.setStudentEmail(email);
 			block.setStudentPassword(password);
@@ -258,13 +270,14 @@ public class TutorTrackAPI {
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@ApiMethod(name = "appointments.getappointments.tutor", httpMethod = "get", path = "appointments/getTutorAppointments")
 	public List<StudentAppointmentPostObject> getTutorAppointments(
-			@Named("tutor_email") String tutor_email, @Named("tutor_password") String tutor_password) {
+			@Named("tutor_email") String tutor_email,
+			@Named("tutor_password") String tutor_password) {
 
 		List<StudentAppointmentPostObject> res = new LinkedList<StudentAppointmentPostObject>();
 
 		Query q = new Query("StudentAppointment").addFilter("tutor_email",
-				Query.FilterOperator.EQUAL, tutor_email).addFilter("tutor_password",
-				Query.FilterOperator.EQUAL, tutor_password);
+				Query.FilterOperator.EQUAL, tutor_email).addFilter(
+				"tutor_password", Query.FilterOperator.EQUAL, tutor_password);
 
 		q.addSort("email", SortDirection.ASCENDING);
 
@@ -273,7 +286,9 @@ public class TutorTrackAPI {
 			List<String> subjects = (List<String>) e.getProperty("subject");
 
 			StudentAppointmentPostObject block = new StudentAppointmentPostObject();
-			block.setTutor(this.getTutorInfo((String) e.getProperty("tutor_email"), (String) e.getProperty("tutor_password"))); 
+			block.setTutor(this.getTutorInfo(
+					(String) e.getProperty("tutor_email"),
+					(String) e.getProperty("tutor_password")));
 			block.setLocation((String) e.getProperty("location"));
 			block.setStudentEmail((String) e.getProperty("email"));
 			block.setStudentPassword((String) e.getProperty("password"));
@@ -295,6 +310,115 @@ public class TutorTrackAPI {
 		}
 
 		return res;
+	}
+
+	@ApiMethod(name = "appointments.cancel.student", httpMethod = "post", path = "appointments/cancelStudentAppointment")
+	public AddTutorBlockResponse cancelAppointment(
+			StudentAppointmentPostObject appt) {
+		Query q = new Query("StudentAppointment")
+				.setFilter(
+						new Query.FilterPredicate("email",
+								Query.FilterOperator.EQUAL, appt.studentEmail))
+				.setFilter(
+						new Query.FilterPredicate("password",
+								Query.FilterOperator.EQUAL,
+								appt.studentPassword))
+				.setFilter(
+						new Query.FilterPredicate("subject",
+								Query.FilterOperator.EQUAL, appt.subjects))
+				.setFilter(
+						new Query.FilterPredicate("location",
+								Query.FilterOperator.EQUAL, appt.location))
+				.setFilter(
+						new Query.FilterPredicate("tutor_email",
+								Query.FilterOperator.EQUAL, appt.tutor.email))
+				.setFilter(
+						new Query.FilterPredicate("tutor_password",
+								Query.FilterOperator.EQUAL, appt.tutor.password))
+				.setFilter(
+						new Query.FilterPredicate("appointment_date",
+								Query.FilterOperator.EQUAL, appt.date))
+				.setFilter(
+						new Query.FilterPredicate("appointment_time",
+								Query.FilterOperator.EQUAL, appt.time));
+
+		List<Entity> results = datastore.prepare(q).asList(
+				FetchOptions.Builder.withDefaults());
+
+		if (results.size() > 0) {
+			Entity s = results.get(0);
+			Key k = s.getKey();
+			datastore.delete(k);
+			AddTutorBlockResponse res = new AddTutorBlockResponse();
+			res.setMessage("Operation Succeeded!");
+			return res;
+		} else {
+			AddTutorBlockResponse res = new AddTutorBlockResponse();
+			res.setMessage("Operation Failed!");
+			return res;
+		}
+
+	}
+
+	@ApiMethod(name = "appointments.edit_appointment", httpMethod = "post", path = "appointments/editAppointment")
+	public AddTutorBlockResponse editAppointment(
+			AppointmentEditorPostObject apptPost) {
+
+		StudentAppointmentPostObject appt = apptPost.edited;
+		StudentAppointmentPostObject orig = apptPost.orig;
+
+		Query q = new Query("StudentAppointment")
+				.setFilter(
+						new Query.FilterPredicate("email",
+								Query.FilterOperator.EQUAL, orig.studentEmail))
+				.setFilter(
+						new Query.FilterPredicate("password",
+								Query.FilterOperator.EQUAL,
+								orig.studentPassword))
+				.setFilter(
+						new Query.FilterPredicate("subject",
+								Query.FilterOperator.EQUAL, orig.subjects))
+				.setFilter(
+						new Query.FilterPredicate("location",
+								Query.FilterOperator.EQUAL, orig.location))
+				.setFilter(
+						new Query.FilterPredicate("tutor_email",
+								Query.FilterOperator.EQUAL, orig.tutor.email))
+				.setFilter(
+						new Query.FilterPredicate("tutor_password",
+								Query.FilterOperator.EQUAL, orig.tutor.password))
+				.setFilter(
+						new Query.FilterPredicate("appointment_date",
+								Query.FilterOperator.EQUAL, orig.date))
+				.setFilter(
+						new Query.FilterPredicate("appointment_time",
+								Query.FilterOperator.EQUAL, orig.time));
+
+		List<Entity> results = datastore.prepare(q).asList(
+				FetchOptions.Builder.withDefaults());
+
+		if (results.size() > 0) {
+			Entity en = results.get(0);
+			en.setProperty("email", appt.studentEmail);
+			en.setProperty("password", appt.studentPassword);
+			en.setProperty("appointment_date", appt.date);
+			en.setProperty("appointment_time", appt.time);
+			en.setProperty("location", appt.location);
+			String[] parts = appt.subjects.split(", ");
+
+			en.setProperty("subject", Arrays.asList(parts));
+			en.setProperty("tutor_email", appt.tutor.email);
+			en.setProperty("tutor_password", appt.tutor.password);
+			datastore.put(en);
+			AddTutorBlockResponse res = new AddTutorBlockResponse();
+			res.setMessage("Operation Succeeded!");
+			return res;
+		} else {
+			AddTutorBlockResponse res = new AddTutorBlockResponse();
+			res.setMessage("Operation Failed!");
+			return res;
+		}
+
 	}
 
 }

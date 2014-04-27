@@ -65,38 +65,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "tutortrack.appointments.make_appointment" : {
-      "path" : "appointments/makeAppointmentWithTutor",
-      "httpMethod" : "post",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.makeAppointmentWithTutor",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "tutortrack.admins.create" : {
-      "path" : "admins/register",
-      "httpMethod" : "post",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.registerAdmin",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "tutortrack.tutors.create" : {
       "path" : "tutors/register",
       "httpMethod" : "post",
@@ -138,14 +106,87 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "tutortrack.students.create" : {
-      "path" : "students/register",
+    "tutortrack.appointments.getappointments.tutor" : {
+      "path" : "appointments/getTutorAppointments",
+      "httpMethod" : "get",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.getTutorAppointments",
+      "request" : {
+        "parameters" : {
+          "tutor_email" : {
+            "type" : "string",
+            "required" : true
+          },
+          "tutor_password" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.appointments.edit_appointment" : {
+      "path" : "appointments/editAppointment",
       "httpMethod" : "post",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.registerStudent",
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.editAppointment",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.appointments.cancel.student" : {
+      "path" : "appointments/cancelStudentAppointment",
+      "httpMethod" : "post",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.cancelAppointment",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.appointments.make_appointment" : {
+      "path" : "appointments/makeAppointmentWithTutor",
+      "httpMethod" : "post",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.makeAppointmentWithTutor",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.admins.create" : {
+      "path" : "admins/register",
+      "httpMethod" : "post",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.registerAdmin",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -176,6 +217,22 @@
           }
         },
         "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "tutortrack.students.create" : {
+      "path" : "students/register",
+      "httpMethod" : "post",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.registerStudent",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -221,31 +278,6 @@
             "required" : true
           },
           "password" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "tutortrack.appointments.getappointments.tutor" : {
-      "path" : "appointments/getTutorAppointments",
-      "httpMethod" : "get",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tutortrack.api.TutorTrackAPI.getTutorAppointments",
-      "request" : {
-        "parameters" : {
-          "tutor_email" : {
-            "type" : "string",
-            "required" : true
-          },
-          "tutor_password" : {
             "type" : "string",
             "required" : true
           }
@@ -334,6 +366,24 @@
           }
         }
       },
+      "Student" : {
+        "id" : "Student",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "umsid" : {
+            "type" : "string"
+          }
+        }
+      },
       "StudentAppointmentPostObject" : {
         "id" : "StudentAppointmentPostObject",
         "type" : "object",
@@ -361,26 +411,26 @@
           }
         }
       },
-      "Admin" : {
-        "id" : "Admin",
+      "StudentAppointmentPostObjectCollection" : {
+        "id" : "StudentAppointmentPostObjectCollection",
         "type" : "object",
         "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "email" : {
-            "type" : "string"
-          },
-          "password" : {
-            "type" : "string"
-          },
-          "umsid" : {
-            "type" : "string"
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "StudentAppointmentPostObject"
+            }
           }
         }
       },
-      "Student" : {
-        "id" : "Student",
+      "AppointmentEditorPostObject" : {
+        "id" : "AppointmentEditorPostObject",
+        "type" : "object",
+        "properties" : {
+        }
+      },
+      "Admin" : {
+        "id" : "Admin",
         "type" : "object",
         "properties" : {
           "name" : {
@@ -408,18 +458,6 @@
             }
           }
         }
-      },
-      "StudentAppointmentPostObjectCollection" : {
-        "id" : "StudentAppointmentPostObjectCollection",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "StudentAppointmentPostObject"
-            }
-          }
-        }
       }
     },
     "methods" : {
@@ -434,6 +472,40 @@
       "com.tutortrack.api.TutorTrackAPI.getTutorInfo" : {
         "response" : {
           "$ref" : "Tutor"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.registerTutor" : {
+        "request" : {
+          "$ref" : "Tutor"
+        },
+        "response" : {
+          "$ref" : "Tutor"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.getStudentInfo" : {
+        "response" : {
+          "$ref" : "Student"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.getTutorAppointments" : {
+        "response" : {
+          "$ref" : "StudentAppointmentPostObjectCollection"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.editAppointment" : {
+        "request" : {
+          "$ref" : "AppointmentEditorPostObject"
+        },
+        "response" : {
+          "$ref" : "AddTutorBlockResponse"
+        }
+      },
+      "com.tutortrack.api.TutorTrackAPI.cancelAppointment" : {
+        "request" : {
+          "$ref" : "StudentAppointmentPostObject"
+        },
+        "response" : {
+          "$ref" : "AddTutorBlockResponse"
         }
       },
       "com.tutortrack.api.TutorTrackAPI.makeAppointmentWithTutor" : {
@@ -452,17 +524,9 @@
           "$ref" : "Admin"
         }
       },
-      "com.tutortrack.api.TutorTrackAPI.registerTutor" : {
-        "request" : {
-          "$ref" : "Tutor"
-        },
+      "com.tutortrack.api.TutorTrackAPI.searchTutors" : {
         "response" : {
-          "$ref" : "Tutor"
-        }
-      },
-      "com.tutortrack.api.TutorTrackAPI.getStudentInfo" : {
-        "response" : {
-          "$ref" : "Student"
+          "$ref" : "TutorBlockPostObjectCollection"
         }
       },
       "com.tutortrack.api.TutorTrackAPI.registerStudent" : {
@@ -473,22 +537,12 @@
           "$ref" : "Student"
         }
       },
-      "com.tutortrack.api.TutorTrackAPI.searchTutors" : {
-        "response" : {
-          "$ref" : "TutorBlockPostObjectCollection"
-        }
-      },
       "com.tutortrack.api.TutorTrackAPI.getAdminInfo" : {
         "response" : {
           "$ref" : "Admin"
         }
       },
       "com.tutortrack.api.TutorTrackAPI.getStudentAppointments" : {
-        "response" : {
-          "$ref" : "StudentAppointmentPostObjectCollection"
-        }
-      },
-      "com.tutortrack.api.TutorTrackAPI.getTutorAppointments" : {
         "response" : {
           "$ref" : "StudentAppointmentPostObjectCollection"
         }
