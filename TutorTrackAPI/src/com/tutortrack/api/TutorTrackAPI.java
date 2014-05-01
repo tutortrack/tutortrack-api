@@ -81,6 +81,45 @@ public class TutorTrackAPI {
 	}
 
 	@SuppressWarnings({ "deprecation", "unchecked" })
+	@ApiMethod(name = "tutors.getblock", httpMethod = "get", path = "tutors/getBlock")
+	public TutorBlockPostObject getBlock(
+			@Named("tutor_email") String tutor_email,
+			@Named("tutor_password") String tutor_password) {
+		Query q = new Query("TutorBlock");
+		q.addFilter("tutor_email", Query.FilterOperator.EQUAL, tutor_email);
+		q.addFilter("tutor_password", Query.FilterOperator.EQUAL,
+				tutor_password);
+
+		List<Entity> l = datastore.prepare(q).asList(
+				FetchOptions.Builder.withDefaults());
+		Entity e = l.get(0);
+
+		List<String> subjects = (List<String>) e.getProperty("subject");
+
+		TutorBlockPostObject block = new TutorBlockPostObject();
+		block.setTutor(getTutorInfo((String) e.getProperty("tutor_email"),
+				(String) e.getProperty("tutor_password")));
+		block.setStartDate((String) e.getProperty("startDate"));
+		block.setEndDate((String) e.getProperty("endDate"));
+		block.setStartTime((String) e.getProperty("startTime"));
+		block.setEndTime((String) e.getProperty("endTime"));
+		block.setLocation((String) e.getProperty("location"));
+
+		String sub = "";
+
+		for (String s : subjects) {
+			sub += s + ", ";
+		}
+
+		sub = sub.substring(0, sub.lastIndexOf(", "));
+
+		block.setSubjects(sub);
+
+		return block;
+
+	}
+
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@ApiMethod(name = "tutors.search", httpMethod = "get", path = "tutors/search")
 	public List<TutorBlockPostObject> searchTutors(
 			@Named("location") @DefaultValue String location,
@@ -91,14 +130,15 @@ public class TutorTrackAPI {
 		Query q = new Query("TutorBlock");
 
 		if (!location.equals("")) {
-			q.addFilter("location", Query.FilterOperator.EQUAL, location.toUpperCase());
+			q.addFilter("location", Query.FilterOperator.EQUAL,
+					location.toUpperCase());
 		}
 
 		if (!subject.equals("")) {
 			q.addFilter("subject", Query.FilterOperator.EQUAL, subject);
 		}
 
-		//q.addSort("tutor_email", SortDirection.ASCENDING);
+		// q.addSort("tutor_email", SortDirection.ASCENDING);
 
 		for (Entity e : datastore.prepare(q).asIterable()) {
 
@@ -139,10 +179,9 @@ public class TutorTrackAPI {
 		en.setProperty("endDate", tutor.getEndDate());
 		en.setProperty("startTime", tutor.getStartTime());
 		en.setProperty("endTime", tutor.getEndTime());
-		
+
 		en.setProperty("location", tutor.location.toUpperCase());
-		
-		
+
 		String[] parts = tutor.getSubjects().split(", ");
 
 		en.setProperty("subject", Arrays.asList(parts));
